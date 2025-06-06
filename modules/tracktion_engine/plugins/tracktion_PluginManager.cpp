@@ -49,10 +49,12 @@ void PluginManager::initialise()
     createBuiltInType<EqualiserPlugin>();
     createBuiltInType<ReverbPlugin>();
     createBuiltInType<CompressorPlugin>();
-    createBuiltInType<ChorusPlugin>();
+    // BEATCONNECT MODIFICATION - Because Liam didn't change the plugin names in BC, we need to comment this out so we can use ours.
+    // createBuiltInType<ChorusPlugin>();
     createBuiltInType<DelayPlugin>();
-    createBuiltInType<PhaserPlugin>();
-    createBuiltInType<PitchShiftPlugin>();
+    // BEATCONNECT MODIFICATION - Because Liam didn't change the plugin names in BC, we need to comment this out so we can use ours.
+    // createBuiltInType<PhaserPlugin>();
+    // createBuiltInType<PitchShiftPlugin>();
     createBuiltInType<LowPassPlugin>();
     createBuiltInType<SamplerPlugin>();
     createBuiltInType<FourOscPlugin>();
