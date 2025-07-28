@@ -256,6 +256,11 @@ public:
 
     /// Restore a custom control surface from custom XML
     virtual ControlSurface* getCustomControlSurfaceForXML (ExternalControllerManager&, const juce::XmlElement&)     { return {}; }
+
+    // BEATCONNECT MODIFICATION START
+    // See override in ExtendedEngineBehaviour.h
+    virtual juce::File getPluginScanPath() { return {}; }
+    // BEATCONNECT MODIFICATION END
 };
 
 }} // namespace tracktion { inline namespace engine
