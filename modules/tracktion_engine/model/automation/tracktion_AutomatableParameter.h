@@ -241,6 +241,14 @@ public:
     /** @internal */
     void startRecordingStatus();
 
+    // BEATCONNECT MODIFICATION
+    // In order to set the blend from automation on the audio thread.
+    // Doing it on the message thread occasionally creates artifacts.
+    // This is the only way I could find to do it. By calling this with isFollowingCurve = true
+    // The function was private and I had to make public.
+    void setParameterValue (float value, bool isFollowingCurve);
+    // BEATCONNECT MODIFICATION
+
 protected:
     struct AttachedValue;
     struct AttachedFloatValue;
@@ -266,8 +274,6 @@ protected:
     mutable std::unique_ptr<AutomationSourceList> automationSourceList;
 
     AutomationSourceList& getAutomationSourceList() const;
-
-    void setParameterValue (float value, bool isFollowingCurve);
 
     void valueTreePropertyChanged (juce::ValueTree&, const juce::Identifier&) override;
     void valueTreeChildAdded (juce::ValueTree&, juce::ValueTree&) override;
