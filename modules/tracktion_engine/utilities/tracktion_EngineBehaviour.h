@@ -260,11 +260,6 @@ public:
     // BEATCONNECT MODIFICATION START
     // See override in ExtendedEngineBehaviour.h
     virtual juce::File getPluginScanPath() { return {}; }
-
-    // To prevent the re-scanning for midi devices.
-    // This is needed when performing an export in Audacity.
-    // Audacity re-instantiates the plugin and introduces a silent section in the final clip.
-    virtual bool allowMidiDeviceRescan() { return true; }
     // BEATCONNECT MODIFICATION END
 };
 
