@@ -509,11 +509,6 @@ void DeviceManager::restartMidiCheckTimer()
 
 void DeviceManager::rescanMidiDeviceList()
 {
-    // BEATCONNECT MODIFICATION START
-    if (!engine.getEngineBehaviour().allowMidiDeviceRescan())
-        return;
-    // BEATCONNECT MODIFICATION END
-
     onlyRescanMidiOnHardwareChange = false;
     startTimer (5);
 }
