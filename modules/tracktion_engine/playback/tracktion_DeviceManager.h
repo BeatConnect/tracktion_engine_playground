@@ -238,14 +238,6 @@ public:
     */
     std::function<void(InputDevice*)> warnOfWastedMidiMessagesFunction;
 
-    // BEATCONNECT MODIFICATION START
-    // Before initializing the hosted audio device, the following flag is set to false.
-    // This call is done outside this class and needs to be public.
-    // It used to be private.
-    // TODO: Is there a better way to do this?
-    bool onlyRescanMidiOnHardwareChange = true;
-    // BEATCONNECT MODIFICATION END
-
 private:
     //==============================================================================
     bool finishedInitialising = false;
@@ -261,6 +253,7 @@ private:
     juce::String defaultWaveOutID, defaultMidiOutID, defaultWaveInID, defaultMidiInID;
 
     int midiRescanIntervalSeconds = 4;
+    bool onlyRescanMidiOnHardwareChange = true;
 
     struct MIDIDeviceList;
     std::unique_ptr<MIDIDeviceList> lastMIDIDeviceList;
