@@ -32,6 +32,11 @@ VirtualMidiInputDevice::VirtualMidiInputDevice (Engine& e, juce::String deviceNa
       useAllInputs (isAllMIDIIns),
       deviceType (devType)
 {
+    // The following is a fix obtained by Dave (tracktion)
+    // If we don't do this, the resulting clip in an export in Audacity will have a small section of silence.
+    if (devType == trackMidiDevice)
+        enabled = false;
+
     if (isAllMIDIIns)
         defaultMonitorMode = MonitorMode::on;
 

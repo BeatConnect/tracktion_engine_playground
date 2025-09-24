@@ -238,7 +238,6 @@ public:
     */
     std::function<void(InputDevice*)> warnOfWastedMidiMessagesFunction;
 
-
 private:
     //==============================================================================
     bool finishedInitialising = false;
