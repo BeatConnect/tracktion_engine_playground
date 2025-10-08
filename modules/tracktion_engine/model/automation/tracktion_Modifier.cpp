@@ -248,7 +248,7 @@ bool ModifierList::isModifier (const juce::Identifier& i)
 {
     return i == IDs::LFO || i == IDs::BREAKPOINTOSCILLATOR
         || i == IDs::STEP || i == IDs::ENVELOPEFOLLOWER
-        || i == IDs::RANDOM || i == IDs::MIDITRACKER;
+           || i == IDs::RANDOM || i == IDs::MIDITRACKER || (i.toString() == "GROSZOB");
 }
 
 juce::ReferenceCountedArray<Modifier> ModifierList::getModifiers() const
@@ -314,7 +314,15 @@ Modifier* ModifierList::createNewObject (const juce::ValueTree& v)
         else if (v.hasType (IDs::ENVELOPEFOLLOWER))       m = new EnvelopeFollowerModifier (edit, v);
         else if (v.hasType (IDs::RANDOM))                 m = new RandomModifier (edit, v);
         else if (v.hasType (IDs::MIDITRACKER))            m = new MIDITrackerModifier (edit, v);
-        else                                              jassertfalse;
+        // TEST
+        else
+        {
+            if (createNewObjectCustom != nullptr)
+                m = createNewObjectCustom (v);
+            else
+                jassertfalse;
+        }
+        // TEST
 
         m->initialise();
     }

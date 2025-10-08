@@ -230,7 +230,10 @@ void LFOModifier::initialise()
 }
 
 //==============================================================================
-float LFOModifier::getCurrentValue()         { return currentValue.load (std::memory_order_acquire); }
+float LFOModifier::getCurrentValue()         
+{ 
+    return currentValue.load (std::memory_order_acquire); 
+}
 float LFOModifier::getCurrentPhase() const   { return currentPhase.load (std::memory_order_acquire); }
 
 AutomatableParameter::ModifierAssignment* LFOModifier::createAssignment (const juce::ValueTree& v)
