@@ -1449,6 +1449,28 @@ void AutomatableParameter::setParameterValue (float value, bool isFollowingCurve
     }
 }
 
+// BEATCONNECT MODIFICATION
+void AutomatableParameter::test_setParameterValue(float value)
+{
+    currentParameterValue = value;
+    setParameterValue (value, true);
+
+    //  if (nt != juce::dontSendNotification)
+    //  {
+    //      jassert (nt != juce::sendNotificationAsync); // Async notifications not yet supported
+    //      TRACKTION_ASSERT_MESSAGE_THREAD
+    //      listeners.call (&Listener::parameterChanged, *this, currentValue);
+    //      getEdit().getParameterChangeHandler().parameterChanged (*this, false);
+    //  
+    //      if (attachedValue != nullptr)
+    //      {
+    //          // Updates the ValueTree via the CachedValue to the current parameter value synchronously
+    //          attachedValue->handleAsyncUpdate();
+    //      }
+    //  }
+}
+// BEATCONNECT MODIFICATION
+
 void AutomatableParameter::setParameter (float value, juce::NotificationType nt)
 {
     currentParameterValue = value;

@@ -247,6 +247,7 @@ public:
     // This is the only way I could find to do it. By calling this with isFollowingCurve = true
     // The function was private and I had to make public.
     void setParameterValue (float value, bool isFollowingCurve);
+    void test_setParameterValue (float value);
     // BEATCONNECT MODIFICATION
 
 protected:
