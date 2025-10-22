@@ -747,7 +747,7 @@ private:
     {
         return v.hasType (IDs::LFO) || v.hasType (IDs::BREAKPOINTOSCILLATOR) || v.hasType (IDs::MACRO)
             || v.hasType (IDs::STEP) || v.hasType (IDs::ENVELOPEFOLLOWER) || v.hasType (IDs::RANDOM)
-               || v.hasType (IDs::MIDITRACKER) || v.hasType (IDs::AUTOMATIONCURVE) || v.hasType ("GROSZOB");
+               || v.hasType (IDs::MIDITRACKER) || v.hasType (IDs::AUTOMATIONCURVE) || v.hasType ("BCTESTMODIFIER");
     }
 
     bool isSuitableType (const juce::ValueTree& v) const override
@@ -1453,8 +1453,9 @@ void AutomatableParameter::setParameterValue (float value, bool isFollowingCurve
 void AutomatableParameter::test_setParameterValue(float value)
 {
     currentParameterValue = value;
-    setParameterValue (value, true);
 
+    //  setParameterValue (value, true);
+    //
     //  if (nt != juce::dontSendNotification)
     //  {
     //      jassert (nt != juce::sendNotificationAsync); // Async notifications not yet supported

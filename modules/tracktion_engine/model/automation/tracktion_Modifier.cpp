@@ -248,7 +248,7 @@ bool ModifierList::isModifier (const juce::Identifier& i)
 {
     return i == IDs::LFO || i == IDs::BREAKPOINTOSCILLATOR
         || i == IDs::STEP || i == IDs::ENVELOPEFOLLOWER
-           || i == IDs::RANDOM || i == IDs::MIDITRACKER || (i.toString() == "GROSZOB");
+           || i == IDs::RANDOM || i == IDs::MIDITRACKER || (i.toString() == "BCTESTMODIFIER");
 }
 
 juce::ReferenceCountedArray<Modifier> ModifierList::getModifiers() const
