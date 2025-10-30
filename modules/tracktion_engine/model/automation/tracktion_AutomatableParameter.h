@@ -241,15 +241,6 @@ public:
     /** @internal */
     void startRecordingStatus();
 
-    // BEATCONNECT MODIFICATION
-    // In order to set the blend from automation on the audio thread.
-    // Doing it on the message thread occasionally creates artifacts.
-    // This is the only way I could find to do it. By calling this with isFollowingCurve = true
-    // The function was private and I had to make public.
-    void setParameterValue (float value, bool isFollowingCurve);
-    void test_setParameterValue (float value);
-    // BEATCONNECT MODIFICATION
-
 protected:
     struct AttachedValue;
     struct AttachedFloatValue;
@@ -284,6 +275,8 @@ protected:
     void valueTreeRedirected (juce::ValueTree&) override;
 
     virtual void parameterChanged (float, bool /*byAutomation*/) {}
+
+    void setParameterValue (float value, bool isFollowingCurve);
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AutomatableParameter)
 };
