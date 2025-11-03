@@ -234,7 +234,7 @@ struct TestModifierAutomationSource : public AutomationModifierSource
         //  DBG (this->modifier->state.toXmlString());
         //  DBG(this->modifier->edit.state.toXmlString());
 
-        assert (state.hasProperty (IDs::paramID) && state.getProperty (IDs::paramID).toString() == "1013");
+        // assert (state.hasProperty (IDs::paramID) && state.getProperty (IDs::paramID).toString() == "1013");
         if (currentModValue > 0.0)
         {
             modValue += currentModValue;
