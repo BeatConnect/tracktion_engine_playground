@@ -182,6 +182,78 @@ struct ModifierAutomationSource : public AutomationModifierSource
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ModifierAutomationSource)
 };
 
+// TEST
+//==============================================================================
+struct TestModifierAutomationSource : public AutomationModifierSource
+{
+    TestModifierAutomationSource (Modifier::Ptr mod, const juce::ValueTree& assignmentState)
+        : AutomationModifierSource (mod->createAssignment (assignmentState)),
+          modifier (std::move (mod))
+    {
+        jassert (state.hasProperty (IDs::source));
+    }
+
+    AutomatableParameter::ModifierSource* getModifierSource() override
+    {
+        return modifier.get();
+    }
+
+    // Modifiers will be updated at the start of each block so can't be repositioned
+    float getValueAt (TimePosition) override { return getCurrentValue(); }
+    bool isEnabledAt (TimePosition) override { return true; }
+
+    void setPosition (TimePosition newEditTime) override
+    {
+        editTimeToReturn = newEditTime;
+    }
+
+    bool isEnabled() override
+    {
+        return getBoolParamValue (*modifier->enabledParam);
+    }
+
+    float getCurrentValue() override
+    {
+        float baseValue = modifier->getCurrentValue();
+
+        const auto currentTime = modifier->getCurrentTime();
+        const auto deltaTime = currentTime - editTimeToReturn;
+
+        if (deltaTime > 0s && deltaTime < Modifier::maxHistoryTime)
+            baseValue = modifier->getValueAt (deltaTime);
+
+        return AutomationScaleHelpers::mapValue (baseValue, assignment->offset, assignment->value, assignment->curve);
+    }
+
+    void processValue ([[maybe_unused]] float& baseValue, float& modValue) override
+    {
+        float currentModValue = getCurrentValue();
+        jassert (! std::isnan (currentModValue));
+
+        //  DBG (this->state.toXmlString());
+        //  DBG (this->modifier->state.toXmlString());
+        //  DBG(this->modifier->edit.state.toXmlString());
+
+        assert (state.hasProperty (IDs::paramID) && state.getProperty (IDs::paramID).toString() == "1013");
+        if (currentModValue > 0.0)
+        {
+            modValue += currentModValue;
+            baseValue = modValue;
+            modValue = 0.0;
+        }
+        else
+        {
+            modValue += currentModValue;
+        }
+    }
+
+    const Modifier::Ptr modifier;
+    TimePosition editTimeToReturn;
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TestModifierAutomationSource)
+};
+// TEST
+
 //==============================================================================
 class AutomationCurveSource : public AutomationSource
 {
@@ -787,10 +859,24 @@ private:
 
         if (auto mod = findModifierForID (parameter.getEdit(), EditItemID::fromProperty (v, IDs::source)))
         {
+            //  if (v.isAChildOf (mod->state))
+            //      return nullptr;
+            //  
+            //  as = new ModifierAutomationSource (mod, v);
+
+            // TEST
             if (v.isAChildOf (mod->state))
                 return nullptr;
 
-            as = new ModifierAutomationSource (mod, v);
+            if (v.hasType("BCTESTMODIFIER"))
+            {
+                as = new TestModifierAutomationSource (mod, v);
+            }
+            else
+            {
+                as = new ModifierAutomationSource (mod, v);
+            }
+            // TEST
         }
         else if (auto macro = getMacroForID (v[IDs::source].toString()))
         {
