@@ -184,9 +184,9 @@ struct ModifierAutomationSource : public AutomationModifierSource
 
 // TEST
 //==============================================================================
-struct TestModifierAutomationSource : public AutomationModifierSource
+struct AudioThreadModifierAutomationSource : public AutomationModifierSource
 {
-    TestModifierAutomationSource (Modifier::Ptr mod, const juce::ValueTree& assignmentState)
+    AudioThreadModifierAutomationSource (Modifier::Ptr mod, const juce::ValueTree& assignmentState)
         : AutomationModifierSource (mod->createAssignment (assignmentState)),
           modifier (std::move (mod))
     {
@@ -230,11 +230,7 @@ struct TestModifierAutomationSource : public AutomationModifierSource
         float currentModValue = getCurrentValue();
         jassert (! std::isnan (currentModValue));
 
-        //  DBG (this->state.toXmlString());
-        //  DBG (this->modifier->state.toXmlString());
-        //  DBG(this->modifier->edit.state.toXmlString());
-
-        // assert (state.hasProperty (IDs::paramID) && state.getProperty (IDs::paramID).toString() == "1013");
+        // TODO: Need to know, somehow, when it's playback and the parameter is following a curve.
         if (currentModValue > 0.0)
         {
             modValue += currentModValue;
@@ -250,7 +246,7 @@ struct TestModifierAutomationSource : public AutomationModifierSource
     const Modifier::Ptr modifier;
     TimePosition editTimeToReturn;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TestModifierAutomationSource)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioThreadModifierAutomationSource)
 };
 // TEST
 
@@ -819,7 +815,7 @@ private:
     {
         return v.hasType (IDs::LFO) || v.hasType (IDs::BREAKPOINTOSCILLATOR) || v.hasType (IDs::MACRO)
             || v.hasType (IDs::STEP) || v.hasType (IDs::ENVELOPEFOLLOWER) || v.hasType (IDs::RANDOM)
-               || v.hasType (IDs::MIDITRACKER) || v.hasType (IDs::AUTOMATIONCURVE) || v.hasType ("BCTESTMODIFIER");
+               || v.hasType (IDs::MIDITRACKER) || v.hasType (IDs::AUTOMATIONCURVE) || v.hasType (IDs::AudioThreadAutomation);
     }
 
     bool isSuitableType (const juce::ValueTree& v) const override
@@ -868,9 +864,9 @@ private:
             if (v.isAChildOf (mod->state))
                 return nullptr;
 
-            if (v.hasType("BCTESTMODIFIER"))
+            if (v.hasType (IDs::AudioThreadAutomation))
             {
-                as = new TestModifierAutomationSource (mod, v);
+                as = new AudioThreadModifierAutomationSource (mod, v);
             }
             else
             {

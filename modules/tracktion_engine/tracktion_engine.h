@@ -449,6 +449,10 @@ namespace tracktion { inline namespace engine
 #include "model/automation/modifiers/tracktion_RandomModifier.h"
 #include "model/automation/modifiers/tracktion_StepModifier.h"
 
+// TEST
+#include "model/automation/modifiers/bc_AudioThreadAutomationModifier.h"
+// TEST
+
 #include "model/export/tracktion_Exportable.h"
 
 #include "control_surfaces/tracktion_ExternalControllerManager.h"

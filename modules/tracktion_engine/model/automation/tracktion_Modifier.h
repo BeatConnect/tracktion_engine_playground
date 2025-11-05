@@ -184,10 +184,6 @@ public:
 
     Edit& edit;
     juce::ValueTree state;
-
-    // TEST
-    std::function<Modifier*(const juce::ValueTree& v)> createNewObjectCustom;
-    // TEST
 };
 
 //==============================================================================

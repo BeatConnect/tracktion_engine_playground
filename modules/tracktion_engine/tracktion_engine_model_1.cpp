@@ -63,6 +63,10 @@ using namespace std::literals;
 #include "model/automation/modifiers/tracktion_RandomModifier.cpp"
 #include "model/automation/modifiers/tracktion_StepModifier.cpp"
 
+// TEST
+#include "model/automation/modifiers/bc_AudioThreadAutomationModifier.cpp"
+// TEST
+
 #include "model/clips/tracktion_ArrangerClip.cpp"
 #include "model/clips/tracktion_AudioClipBase.cpp"
 #include "model/clips/tracktion_CompManager.cpp"
