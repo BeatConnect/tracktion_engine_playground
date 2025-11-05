@@ -230,17 +230,9 @@ struct AudioThreadModifierAutomationSource : public AutomationModifierSource
         float currentModValue = getCurrentValue();
         jassert (! std::isnan (currentModValue));
 
-        // TODO: Need to know, somehow, when it's playback and the parameter is following a curve.
-        if (currentModValue > 0.0)
-        {
-            modValue += currentModValue;
-            baseValue = modValue;
-            modValue = 0.0;
-        }
-        else
-        {
-            modValue += currentModValue;
-        }
+        modValue += currentModValue;
+        baseValue = modValue;
+        modValue = 0.0;
     }
 
     const Modifier::Ptr modifier;
